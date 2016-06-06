@@ -1,0 +1,22 @@
+{
+  "name": "aliyun-ros",
+  "version": "0.0.1",
+  "description": "阿里云资源编排的简单SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "aliyun",
+    "资源编排",
+    "ros"
+  ],
+  "author": "Ansel Chen",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.0",
+    "lodash": "^4.13.1",
+    "request": "^2.72.0",
+    "uuid": "^2.0.2"
+  }
+}
