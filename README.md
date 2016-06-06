@@ -14,7 +14,26 @@
 * ros.validateTemplate 
 * ros.getEvents
 
-
 # 用法
 
 ros.getStack(options, data);
+
+# 用法
+
+```coffeescript
+AliRos = require '../src/'
+
+options = 
+  AccessKeyId: 'xxxxx'
+  AccessKeySecret: 'xxxxxxxxxxxxxx'
+
+aliRos = new AliRos.Client options
+
+_options = 
+  SupportStatus: 'UNKNOWN'
+aliRos.getResourceTypes _options
+.then (res)->
+  console.log res.headers, res.body
+.catch (err)->
+  console.log err
+```

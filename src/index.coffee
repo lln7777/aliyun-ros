@@ -18,16 +18,14 @@ doRequest = (reqOptions, callback)->
   if callback?
 
   else
-    console.log reqOptions, '==========='
     return new Promise (resolve, reject)->
       request reqOptions, (err, res, body)->
-        console.log res.req._headers, 'req.headers'
         if err?
           reject err
         else
           if self.after? and (typeof self.after is 'function')
             self.after body
-          resolve body
+          resolve res
       return
 
 
@@ -95,10 +93,6 @@ class Client
     reqOptions.headers = _options
 
     doRequest.call(this, reqOptions)
-    .then (ret)->
-      console.log ret
-    .catch (err)->
-      console.log err
 
   createStack: (options = {})->
     options.uriPattern = '/stacks'
