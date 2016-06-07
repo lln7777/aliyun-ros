@@ -16,7 +16,7 @@ config =
 doRequest = (reqOptions, callback)->
   self = this
   if callback?
-
+    # @TODO
   else
     return new Promise (resolve, reject)->
       request reqOptions, (err, res, body)->
@@ -38,18 +38,18 @@ doRequest = (reqOptions, callback)->
 class Client
 
   options :
-    "AccessKeyId": ''
-    "AccessKeySecret": ''
-    "Content-Type": 'application/json;charset=utf-8'
-    "Accept": 'application/json'
-    "Cache-Control": 'no-cache'
-    "Connection": "keep-alive"
-    "Pragma": 'no-cache'
-    "x-acs-signature-nonce":''
-    "x-acs-signature-method":'HMAC-SHA1'
-    "x-acs-signature-version":'1.0'
-    "x-acs-version":'2015-09-01'
-    'x-acs-region-id':'cn-beijing'
+    "AccessKeyId":             ''
+    "AccessKeySecret":         ''
+    "Content-Type":            'application/json;charset=utf-8'
+    "Accept":                  'application/json'
+    "Cache-Control":           'no-cache'
+    "Connection":              "keep-alive"
+    "Pragma":                  'no-cache'
+    "x-acs-signature-nonce":   ''
+    "x-acs-signature-method":  'HMAC-SHA1'
+    "x-acs-signature-version": '1.0'
+    "x-acs-version":           '2015-09-01'
+    'x-acs-region-id':         'cn-beijing'
 
   ###
   构建方法

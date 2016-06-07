@@ -46,11 +46,13 @@ buildCanonicalHeaders = (headers, header_begin)->
     result += value[0] + ':' + value[1]
     result += HEADER_SEPARATOR
   return result
+
 deleteHeadersParameters = (headers, header_begin)->
   for key, value of headers
     if ~(key.toLowerCase().indexOf header_begin)
       delete headers[key]
   return headers
+
 buildQueryString = (uri)->
   unSortMap = []
   sortMap = []
@@ -61,12 +63,10 @@ buildQueryString = (uri)->
     params = uriArr[1].split '&'
     sortMap = params.sort()
     result += '?' + sortMap.join QUERY_SEPARATOR
-  console.log result, '..............'
   return result
 
 exports.composeSignString = (options = {})->
   # 先拼装出uri
-  console.log options, '>>>options    2<<<<<'
   signString = ""
   signString += options.method
   signString += HEADER_SEPARATOR
@@ -83,17 +83,8 @@ exports.composeSignString = (options = {})->
   # 加入CanonicalizedHeaders
   signString += buildCanonicalHeaders(options, "x-acs-")
   # deleteHeadersParameters(options, "x-acs-")
-  console.log options, '>>>options    4<<<<<'
-  console.log signString, '>>>>>sing_to_string 1<<<<<'
   signString += buildQueryString options.uri
-  console.log signString, '>>>>>sing_to_string 2<<<<<'
   return signString
-
-exports.getPath = (options = {})->
-
-# 针对阿里的的几个字符的特殊处理
-specialEncode = (str) ->
-  encodeURIComponent(str).replace(/\+/g, "%20").replace(/\*/g, "%2A").replace /%7E/g, "~"
 
 handleParams = (params)->
   keysSorted = Object.keys(params).sort()
@@ -107,6 +98,7 @@ handleParams = (params)->
 
 exports.md5base64  = (text)->
   crypto.createHash('md5').update(text).digest('base64')
+
 exports.sign = (secret, signString) ->
   hmac = crypto.createHmac("sha1", secret)
   hmac.update signString
