@@ -20,20 +20,26 @@ ros.getStack(options, data);
 
 # 用法
 
-```coffeescript
-AliRos = require '../src/'
+```javascript
+var AliRos, _options, aliRos, options;
 
-options = 
-  AccessKeyId: 'xxxxx'
-  AccessKeySecret: 'xxxxxxxxxxxxxx'
+AliRos = require('../src/');
 
-aliRos = new AliRos.Client options
+options = {
+  AccessKeyId: '<AccessKeyId>',
+  AccessKeySecret: '<AccessKeySecret>'
+};
 
-_options = 
+aliRos = new AliRos.Client(options);
+
+_options = {
   SupportStatus: 'UNKNOWN'
-aliRos.getResourceTypes _options
-.then (res)->
-  console.log res.headers, res.body
-.catch (err)->
-  console.log err
+};
+
+aliRos.getResourceTypes(_options).then(function(res) {
+  return console.log(res.headers, res.body);
+})["catch"](function(err) {
+  return console.log(err);
+});
+
 ```

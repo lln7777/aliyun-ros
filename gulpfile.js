@@ -1,4 +1,4 @@
-var clean, coffee, distPath, gulp, srcPath;
+var clean, coffee, distPath, gulp, srcPath, testPath;
 
 gulp = require('gulp');
 
@@ -10,6 +10,8 @@ distPath = './dist/';
 
 srcPath = './src/';
 
+testPath = './test/'
+
 gulp.task('clean', function() {
   return gulp.src(distPath).pipe(clean());
 });
@@ -19,9 +21,12 @@ gulp.task('copy', ['clean'], function() {
 });
 
 gulp.task('coffee', ['clean'], function() {
-  return gulp.src([srcPath + "**/*.coffee"]).pipe(coffee({
+  gulp.src([srcPath + "**/*.coffee"]).pipe(coffee({
     bare: true
   })).pipe(gulp.dest(distPath));
+  gulp.src([testPath + "**/*.coffee"]).pipe(coffee({
+    bare: true
+  })).pipe(gulp.dest('./test/'));
 });
 
 gulp.task('default', ['copy', 'coffee']);

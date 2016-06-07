@@ -3,7 +3,7 @@
 Author: Ansel Chen
 Thanks xiaoshan5733
  */
-var ACCEPT, CONTENT_MD5, CONTENT_TYPE, DATE, HEADER_SEPARATOR, QUERY_SEPARATOR, buildCanonicalHeaders, buildQueryString, crypto, deleteHeadersParameters, handleParams, specialEncode;
+var ACCEPT, CONTENT_MD5, CONTENT_TYPE, DATE, HEADER_SEPARATOR, QUERY_SEPARATOR, buildCanonicalHeaders, buildQueryString, crypto, deleteHeadersParameters, handleParams;
 
 crypto = require("crypto");
 
@@ -89,7 +89,6 @@ buildQueryString = function(uri) {
     sortMap = params.sort();
     result += '?' + sortMap.join(QUERY_SEPARATOR);
   }
-  console.log(result, '..............');
   return result;
 };
 
@@ -98,7 +97,6 @@ exports.composeSignString = function(options) {
   if (options == null) {
     options = {};
   }
-  console.log(options, '>>>options    2<<<<<');
   signString = "";
   signString += options.method;
   signString += HEADER_SEPARATOR;
@@ -119,21 +117,8 @@ exports.composeSignString = function(options) {
   }
   signString += HEADER_SEPARATOR;
   signString += buildCanonicalHeaders(options, "x-acs-");
-  console.log(options, '>>>options    4<<<<<');
-  console.log(signString, '>>>>>sing_to_string 1<<<<<');
   signString += buildQueryString(options.uri);
-  console.log(signString, '>>>>>sing_to_string 2<<<<<');
   return signString;
-};
-
-exports.getPath = function(options) {
-  if (options == null) {
-    options = {};
-  }
-};
-
-specialEncode = function(str) {
-  return encodeURIComponent(str).replace(/\+/g, "%20").replace(/\*/g, "%2A").replace(/%7E/g, "~");
 };
 
 handleParams = function(params) {
