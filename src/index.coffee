@@ -57,7 +57,13 @@ class Client
   ###
   constructor: (options)->
     # 用用户自定义的参数替代默认参数
-    _.assign @options, options
+    if typeof options is 'object'
+      if options.AccessKeyId and options.AccessKeySecret
+        _.assign @options, options
+      else
+        throw new Error '请设置AccessKeyId和AccessKeySecret'
+    else
+      throw new Error '实例化参数类型不正确'
 
 
   request: (options)->

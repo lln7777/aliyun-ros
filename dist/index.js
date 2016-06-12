@@ -66,7 +66,15 @@ Client = (function() {
    */
 
   function Client(options) {
-    _.assign(this.options, options);
+    if (typeof options === 'object') {
+      if (options.AccessKeyId && options.AccessKeySecret) {
+        _.assign(this.options, options);
+      } else {
+        throw new Error('请设置AccessKeyId和AccessKeySecret');
+      }
+    } else {
+      throw new Error('实例化参数类型不正确');
+    }
   }
 
   Client.prototype.request = function(options) {
