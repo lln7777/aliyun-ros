@@ -85,7 +85,7 @@ class Client
     KeyId = _options.AccessKeyId
     reqOptions =
       method: _options.method ? 'GET'
-      json: true
+      # json: true
       uri: "#{config.protocol}://#{config.domain}#{_options.uri}"
     reqOptions.body = _options.body if _options.body?
     delete _options.AccessKeyId
@@ -97,7 +97,7 @@ class Client
     _options['Authorization'] = "acs #{KeyId}:#{signature}"
     
     reqOptions.headers = _options
-
+    console.log reqOptions, '>>>>>>>>'
     doRequest.call(this, reqOptions)
 
   createStack: (options = {})->
@@ -172,10 +172,13 @@ class Client
     _.assign options, @options, options
     @request options
   # 验证模板信息
-  validateTemplate: (options = {})->
+  validateTemplate: (body)->
+    options = {}
     options.uriPattern = '/validate'
     options.method = 'POST'
     _.assign options, @options, options
+    options.body = body
+    # console.log options, '=-=-=-=-=-=-=-='
     @request options
   # 查询事件列表
   getEvents: (options = {})->

@@ -91,7 +91,6 @@ Client = (function() {
     KeyId = _options.AccessKeyId;
     reqOptions = {
       method: (ref = _options.method) != null ? ref : 'GET',
-      json: true,
       uri: config.protocol + "://" + config.domain + _options.uri
     };
     if (_options.body != null) {
@@ -104,6 +103,7 @@ Client = (function() {
     delete _options.uri;
     _options['Authorization'] = "acs " + KeyId + ":" + signature;
     reqOptions.headers = _options;
+    console.log(reqOptions, '>>>>>>>>');
     return doRequest.call(this, reqOptions);
   };
 
@@ -225,13 +225,13 @@ Client = (function() {
     return this.request(options);
   };
 
-  Client.prototype.validateTemplate = function(options) {
-    if (options == null) {
-      options = {};
-    }
+  Client.prototype.validateTemplate = function(body) {
+    var options;
+    options = {};
     options.uriPattern = '/validate';
     options.method = 'POST';
     _.assign(options, this.options, options);
+    options.body = body;
     return this.request(options);
   };
 
