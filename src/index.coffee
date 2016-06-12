@@ -57,7 +57,7 @@ class Client
   ###
   constructor: (options)->
     # 用用户自定义的参数替代默认参数
-    @options = _.assign {}, @options, options
+    _.assign @options, options
 
 
   request: (options)->

@@ -66,7 +66,7 @@ Client = (function() {
    */
 
   function Client(options) {
-    this.options = _.assign({}, this.options, options);
+    _.assign(this.options, options);
   }
 
   Client.prototype.request = function(options) {
