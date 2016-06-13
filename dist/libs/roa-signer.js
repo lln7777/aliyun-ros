@@ -28,6 +28,9 @@ http协议Header
 
 exports.replaceOccupiedParameters = function(options) {
   var key, paths, result, target, value;
+  if (!options.uriPattern) {
+    return null;
+  }
   result = options.uriPattern;
   delete options.uriPattern;
   paths = options;

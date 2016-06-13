@@ -103,7 +103,6 @@ Client = (function() {
     delete _options.uri;
     _options['Authorization'] = "acs " + KeyId + ":" + signature;
     reqOptions.headers = _options;
-    console.log(reqOptions, '>>>>>>>>');
     return doRequest.call(this, reqOptions);
   };
 
@@ -226,12 +225,23 @@ Client = (function() {
   };
 
   Client.prototype.validateTemplate = function(body) {
-    var options;
+    var e, error, options, tpl;
     options = {};
     options.uriPattern = '/validate';
     options.method = 'POST';
     _.assign(options, this.options, options);
-    options.body = body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch (error) {
+        e = error;
+        throw new Error('无法解析模板');
+      }
+    }
+    tpl = {
+      template: body
+    };
+    options.body = JSON.stringify(tpl);
     return this.request(options);
   };
 

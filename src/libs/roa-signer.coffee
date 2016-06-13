@@ -19,6 +19,8 @@ http协议Header
 ### 
 
 exports.replaceOccupiedParameters = (options)->
+  if not options.uriPattern
+    return null
   result = options.uriPattern
   delete options.uriPattern
   paths = options

@@ -97,7 +97,7 @@ class Client
     _options['Authorization'] = "acs #{KeyId}:#{signature}"
     
     reqOptions.headers = _options
-    console.log reqOptions, '>>>>>>>>'
+
     doRequest.call(this, reqOptions)
 
   createStack: (options = {})->
@@ -177,8 +177,14 @@ class Client
     options.uriPattern = '/validate'
     options.method = 'POST'
     _.assign options, @options, options
-    options.body = body
-    # console.log options, '=-=-=-=-=-=-=-='
+    if typeof body is 'string'
+      try
+        body = JSON.parse body
+      catch e
+        throw new Error '无法解析模板'
+    tpl =
+      template: body
+    options.body = JSON.stringify tpl
     @request options
   # 查询事件列表
   getEvents: (options = {})->
