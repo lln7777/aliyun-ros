@@ -101,45 +101,65 @@ class Client
     doRequest.call(this, reqOptions)
 
   createStack: (options = {})->
+    if options.body
+      options.body = JSON.stringify options.body
+    else
+      options.body = {}
+      options.body.Name = options.Name if options.Name?
+      options.body.Template = options.Template if options.Template?
+      options.body.Parameters = options.Parameters if options.Parameters?
+      options.body.DisableRollback = options.DisableRollback if options.DisableRollback?
+      options.body.TimeoutMins = options.TimeoutMins if options.TimeoutMins?
+      delete options.Name
+      delete options.Template
+      delete options.Parameters
+      delete options.DisableRollback
+      delete options.TimeoutMins
+      options.body = JSON.stringify options.body
+    if options.RegionId?
+      options['x-acs-region-id'] = options.RegionId
+      delete options.RegionId
     options.uriPattern = '/stacks'
     options.method = 'POST'
-    _.assign options, @options, options
+    options = _.assign {}, @options, options
+
     @request options
+
   # 查询堆栈列表
   getStacks: (options = {})->
     options.uriPattern = '/stacks'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询堆栈信息
   getStack: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 删除堆栈
   delStack: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}'
     options.method = 'DELETE'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 废弃堆栈
   abandonStack: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}/abandon'
     options.method = 'DELETE'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询资源列表
   getResources: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}/resources'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询资源信息
   getResource: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}/resources/{ResourceName}'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询资源类型列表
   getResourceTypes: (options = {})->
@@ -148,19 +168,19 @@ class Client
       options.uriPattern += '?SupportStatus=' + options.SupportStatus
       delete options.SupportStatus
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询资源类型信息
   getResourceType: (options = {})->
     options.uriPattern = '/resource_types/{TypeName}'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询资源类型模板信息
   getResourceTypeTemplate: (options = {})->
     options.uriPattern = '/resource_types/{TypeName}/template'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 查询模板信息
   getStackTemplate: (options = {})->
@@ -169,14 +189,14 @@ class Client
       Template : options.Template
     delete options.Template
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
   # 验证模板信息
   validateTemplate: (body)->
     options = {}
     options.uriPattern = '/validate'
     options.method = 'POST'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     if typeof body is 'string'
       try
         body = JSON.parse body
@@ -190,7 +210,7 @@ class Client
   getEvents: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}/events'
     options.method = 'GET'
-    _.assign options, @options, options
+    options =_.assign {}, @options, options
     @request options
 
 exports.Client = Client

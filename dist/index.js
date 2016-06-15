@@ -110,9 +110,39 @@ Client = (function() {
     if (options == null) {
       options = {};
     }
+    if (options.body) {
+      options.body = JSON.stringify(options.body);
+    } else {
+      options.body = {};
+      if (options.Name != null) {
+        options.body.Name = options.Name;
+      }
+      if (options.Template != null) {
+        options.body.Template = options.Template;
+      }
+      if (options.Parameters != null) {
+        options.body.Parameters = options.Parameters;
+      }
+      if (options.DisableRollback != null) {
+        options.body.DisableRollback = options.DisableRollback;
+      }
+      if (options.TimeoutMins != null) {
+        options.body.TimeoutMins = options.TimeoutMins;
+      }
+      delete options.Name;
+      delete options.Template;
+      delete options.Parameters;
+      delete options.DisableRollback;
+      delete options.TimeoutMins;
+      options.body = JSON.stringify(options.body);
+    }
+    if (options.RegionId != null) {
+      options['x-acs-region-id'] = options.RegionId;
+      delete options.RegionId;
+    }
     options.uriPattern = '/stacks';
     options.method = 'POST';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -122,7 +152,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -132,7 +162,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -142,7 +172,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}';
     options.method = 'DELETE';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -152,7 +182,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}/abandon';
     options.method = 'DELETE';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -162,7 +192,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}/resources';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -172,7 +202,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}/resources/{ResourceName}';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -186,7 +216,7 @@ Client = (function() {
       delete options.SupportStatus;
     }
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -196,7 +226,7 @@ Client = (function() {
     }
     options.uriPattern = '/resource_types/{TypeName}';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -206,7 +236,7 @@ Client = (function() {
     }
     options.uriPattern = '/resource_types/{TypeName}/template';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -220,7 +250,7 @@ Client = (function() {
     };
     delete options.Template;
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 
@@ -229,7 +259,7 @@ Client = (function() {
     options = {};
     options.uriPattern = '/validate';
     options.method = 'POST';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     if (typeof body === 'string') {
       try {
         body = JSON.parse(body);
@@ -251,7 +281,7 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}/events';
     options.method = 'GET';
-    _.assign(options, this.options, options);
+    options = _.assign({}, this.options, options);
     return this.request(options);
   };
 

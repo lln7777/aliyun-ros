@@ -98,7 +98,7 @@ handleParams = (params)->
     i++
   result
 
-exports.md5base64  = (text)->
+exports.md5base64 = (text)->
   crypto.createHash('md5').update(text).digest('base64')
 
 exports.sign = (secret, signString) ->
