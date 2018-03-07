@@ -1,6 +1,6 @@
 {
   "name": "aliyun-ros",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "阿里云资源编排的简单SDK",
   "main": "index.js",
   "scripts": {

@@ -40,13 +40,28 @@ options = {
 
 aliRos = new AliRos.Client(options);
 
-_options = {
-  SupportStatus: 'UNKNOWN'
-};
-
-aliRos.getResourceTypes(_options).then(function(res) {
+// 查询资源类型
+aliRos.getResourceTypes({SupportStatus: 'UNKNOWN'}).then(function(res) {
   return console.log(res.headers, res.body);
-})["catch"](function(err) {
+}).catch(function(err) {
+  return console.log(err);
+});
+
+// 创建资源栈, 注意Api中要求headers设置x-acs-region-id，此SDK统一设置RegionId即可
+aliRos.createStack({
+  RegionId: 'cn-beijing',
+  Name: 'xxxx',
+  Template: {
+    ...
+  },
+  Parameters: {
+    ...
+  },
+  DisableRollback: true,
+  TimeoutMins:1
+}).then(function(res) {
+  return console.log(res.headers, res.body);
+}).catch(function(err) {
   return console.log(err);
 });
 
