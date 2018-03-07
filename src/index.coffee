@@ -1,6 +1,5 @@
 roaSigner = require './libs/roa-signer'
 request   = require 'request'
-Promise   = require 'bluebird'
 _         = require 'lodash'
 uuid      = require 'uuid'
 
