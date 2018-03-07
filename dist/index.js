@@ -1,10 +1,8 @@
-var Client, Promise, _, config, doRequest, request, roaSigner, uuid;
+var Client, _, config, doRequest, request, roaSigner, uuid;
 
 roaSigner = require('./libs/roa-signer');
 
 request = require('request');
-
-Promise = require('bluebird');
 
 _ = require('lodash');
 
@@ -166,6 +164,42 @@ Client = (function() {
     return this.request(options);
   };
 
+  Client.prototype.putStack = function(options) {
+    if (options == null) {
+      options = {};
+    }
+    options.uriPattern = '/stacks/{StackName}/{StackId}';
+    options.method = 'PUT';
+    if (options.body) {
+      options.body = JSON.stringify(options.body);
+    } else {
+      options.body = {};
+      if (options.Template != null) {
+        options.body.Template = options.Template;
+      }
+      if (options.Parameters != null) {
+        options.body.Parameters = options.Parameters;
+      }
+      if (options.DisableRollback != null) {
+        options.body.DisableRollback = options.DisableRollback;
+      }
+      if (options.TimeoutMins != null) {
+        options.body.TimeoutMins = options.TimeoutMins;
+      }
+      delete options.Template;
+      delete options.Parameters;
+      delete options.DisableRollback;
+      delete options.TimeoutMins;
+      options.body = JSON.stringify(options.body);
+    }
+    if (options.RegionId != null) {
+      options['x-acs-region-id'] = options.RegionId;
+      delete options.RegionId;
+    }
+    options = _.assign({}, this.options, options);
+    return this.request(options);
+  };
+
   Client.prototype.delStack = function(options) {
     if (options == null) {
       options = {};
@@ -182,6 +216,46 @@ Client = (function() {
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}/abandon';
     options.method = 'DELETE';
+    options = _.assign({}, this.options, options);
+    return this.request(options);
+  };
+
+  Client.prototype.previewStack = function(options) {
+    if (options == null) {
+      options = {};
+    }
+    options.uriPattern = '/stacks/preview';
+    options.method = 'POST';
+    if (options.body) {
+      options.body = JSON.stringify(options.body);
+    } else {
+      options.body = {};
+      if (options.Name != null) {
+        options.body.Name = options.Name;
+      }
+      if (options.Template != null) {
+        options.body.Template = options.Template;
+      }
+      if (options.Parameters != null) {
+        options.body.Parameters = options.Parameters;
+      }
+      if (options.DisableRollback != null) {
+        options.body.DisableRollback = options.DisableRollback;
+      }
+      if (options.TimeoutMins != null) {
+        options.body.TimeoutMins = options.TimeoutMins;
+      }
+      delete options.Name;
+      delete options.Template;
+      delete options.Parameters;
+      delete options.DisableRollback;
+      delete options.TimeoutMins;
+      options.body = JSON.stringify(options.body);
+    }
+    if (options.RegionId != null) {
+      options['x-acs-region-id'] = options.RegionId;
+      delete options.RegionId;
+    }
     options = _.assign({}, this.options, options);
     return this.request(options);
   };
@@ -255,7 +329,7 @@ Client = (function() {
   };
 
   Client.prototype.validateTemplate = function(body) {
-    var e, error, options, tpl;
+    var e, options, tpl;
     options = {};
     options.uriPattern = '/validate';
     options.method = 'POST';
@@ -280,6 +354,16 @@ Client = (function() {
       options = {};
     }
     options.uriPattern = '/stacks/{StackName}/{StackId}/events';
+    options.method = 'GET';
+    options = _.assign({}, this.options, options);
+    return this.request(options);
+  };
+
+  Client.prototype.getRegions = function(options) {
+    if (options == null) {
+      options = {};
+    }
+    options.uriPattern = '/regions';
     options.method = 'GET';
     options = _.assign({}, this.options, options);
     return this.request(options);
