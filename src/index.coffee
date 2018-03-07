@@ -99,6 +99,7 @@ class Client
 
     doRequest.call(this, reqOptions)
 
+  # 创建资源栈
   createStack: (options = {})->
     if options.body
       options.body = JSON.stringify options.body
@@ -136,6 +137,29 @@ class Client
     options.method = 'GET'
     options =_.assign {}, @options, options
     @request options
+  # 查询堆栈信息
+  putStack: (options = {})->
+    options.uriPattern = '/stacks/{StackName}/{StackId}'
+    options.method = 'PUT'
+
+    if options.body
+      options.body = JSON.stringify options.body
+    else
+      options.body = {}
+      options.body.Template = options.Template if options.Template?
+      options.body.Parameters = options.Parameters if options.Parameters?
+      options.body.DisableRollback = options.DisableRollback if options.DisableRollback?
+      options.body.TimeoutMins = options.TimeoutMins if options.TimeoutMins?
+      delete options.Template
+      delete options.Parameters
+      delete options.DisableRollback
+      delete options.TimeoutMins
+      options.body = JSON.stringify options.body
+    if options.RegionId?
+      options['x-acs-region-id'] = options.RegionId
+      delete options.RegionId
+    options =_.assign {}, @options, options
+    @request options
   # 删除堆栈
   delStack: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}'
@@ -146,6 +170,31 @@ class Client
   abandonStack: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}/abandon'
     options.method = 'DELETE'
+    options =_.assign {}, @options, options
+    @request options
+  # 预览资源栈
+  previewStack: (options = {})->
+    options.uriPattern = '/stacks/preview'
+    options.method = 'POST'
+    if options.body
+      options.body = JSON.stringify options.body
+    else
+      options.body = {}
+      options.body.Name = options.Name if options.Name?
+      options.body.Template = options.Template if options.Template?
+      options.body.Parameters = options.Parameters if options.Parameters?
+      options.body.DisableRollback = options.DisableRollback if options.DisableRollback?
+      options.body.TimeoutMins = options.TimeoutMins if options.TimeoutMins?
+      delete options.Name
+      delete options.Template
+      delete options.Parameters
+      delete options.DisableRollback
+      delete options.TimeoutMins
+      options.body = JSON.stringify options.body
+    if options.RegionId?
+      options['x-acs-region-id'] = options.RegionId
+      delete options.RegionId
+
     options =_.assign {}, @options, options
     @request options
   # 查询资源列表
@@ -208,6 +257,12 @@ class Client
   # 查询事件列表
   getEvents: (options = {})->
     options.uriPattern = '/stacks/{StackName}/{StackId}/events'
+    options.method = 'GET'
+    options =_.assign {}, @options, options
+    @request options
+  # 查询地域列表
+  getRegions: (options = {})->
+    options.uriPattern = '/regions'
     options.method = 'GET'
     options =_.assign {}, @options, options
     @request options
