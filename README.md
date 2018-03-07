@@ -1,5 +1,5 @@
 # API 接口对照表
-![API 接口对照表](https://help.aliyun.com/document_detail/28899.html)
+[API 接口对照表](https://help.aliyun.com/document_detail/28899.html)
 
 # 方法
 
